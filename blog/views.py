@@ -17,7 +17,7 @@ class ArticleListView(ListView):
     context_object_name = 'articles'
 
 class ArticleListView(ArticleListView):
-    queryset = Article.objects.all()
+    queryset = Article.objects.all().order_by('-created_time')
 
 class ArticleByTagView(ArticleListView):
     def get_queryset(self):
@@ -50,7 +50,7 @@ class IndexView(ListView):
 class AboutView(ListView):
     template_name = 'blog/about.html' 
     context_object_name = 'about'
-    queryset = Article.objects.get(title='about')
+    queryset = Article.objects.get(title='About')
 
     def get_queryset(self):
         post = super().get_queryset()
