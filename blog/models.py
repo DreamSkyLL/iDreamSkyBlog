@@ -17,8 +17,8 @@ class Log(models.Model):
 
 class Article(models.Model):
     ALLOW_COMMENT = (
-        ('0', 'yes'),
-        ('1', 'no')
+        ('0', 'no'),
+        ('1', 'yes')
     )
 
     title = models.CharField(max_length=100)
@@ -26,7 +26,7 @@ class Article(models.Model):
     created_time = models.DateTimeField('Created time', default=now)
     modified_time = models.DateTimeField('Modified time', default=now)
     pub_time = models.DateField(blank=False, null=False, default=now)
-    allow_comment = models.CharField("评论开关", max_length=1, choices=ALLOW_COMMENT)
+    allow_comment = models.CharField("评论开关", max_length=1, choices=ALLOW_COMMENT, default='1')
     views = models.PositiveIntegerField('浏览', default=0)
     category = models.ForeignKey("Category", on_delete=models.SET_NULL, null=True)
     tags = models.ManyToManyField("Tag", blank=True)
