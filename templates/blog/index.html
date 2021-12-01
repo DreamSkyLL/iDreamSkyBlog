@@ -1,114 +1,143 @@
-
 {% extends 'base.html' %}
 {% load blog_extras %}
 {% load staticfiles %}
 
 {% block main %}
-<div id="content-wrapper">
+    <div id="content-wrapper">
 
-  <body class="archive bg-color">
+        <body class="archive bg-color">
 
-    <!-- Preload elements -->
-    <div id="preloader"></div>
-    <div id="headerwrap">
-		<div id="logopicdiv" class="container-fluid">
-			<div class="row">
-				<div id="bannertext" class="col-lg-10 col-lg-offset-1">
-					<img id="logopic" src="{% static 'LOGO_white.png' %}">
-				</div>
-			</div><!-- row -->
-		</div><!-- /container -->
-    </div>
-    <!-- End preload elements -->
+        <!-- Preload elements -->
+        <div id="preloader"></div>
+        <div id="headerwrap">
+            <div id="logopicdiv" class="container-fluid">
+                <div class="row">
+                    <div id="bannertext" class="col-lg-10 col-lg-offset-1">
+                        <img id="logopic" src="{% static 'LOGO_white.png' %}">
+                    </div>
+                </div><!-- row -->
+            </div><!-- /container -->
+        </div>
+        <!-- End preload elements -->
 
-    <!-- Logs -->
-    <section id="about" class="section-wrapper">
-        <div class="container">
-            <div class="centered fade-down section-heading">
-                <h2 class="main-title">日 志</h2>
-                <hr>
-                <p>记录了一些日常</p>
-            </div>
-
-            <div class="row gap">
-                <div class="col-md-8 col-md-offset-2">
-                    <!--这里可以放一张图片-->
-                    <!--<img src="" class="fade-up img-responsive" alt="这里本应该是张图片" />-->
+        <!-- Logs -->
+        <section id="about" class="section-wrapper">
+            <div class="container">
+                <div class="centered fade-down section-heading">
+                    <h2 class="main-title">日 志</h2>
+                    <hr>
+                    <p>记录了一些日常</p>
                 </div>
-            </div>
 
-            <div class="row gap">
-                <div class="col-md-offset-1 col-md-6 fade-up">
-                    <h4>{{ latestlog.pub_time|date:'Y/m/d' }}</h4>
-                    <p>{{ latestlog.body }}</p>
+                <div class="row gap">
+                    <div class="col-md-8 col-md-offset-2">
+                        <!--这里可以放一张图片-->
+                        <!--<img src="" class="fade-up img-responsive" alt="这里本应该是张图片" />-->
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="qa-message-list" id="wallmessages">
 
-                               
+                <div class="row gap">
+                    <div class="col-md-offset-1 col-md-6 fade-up">
+                        <h4>{{ latestlog.pub_time|date:'Y/m/d' }}</h4>
+                        <p>{{ latestlog.body }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="qa-message-list" id="wallmessages">
 
-                        {% for log in logs %}
-                        <div class="message-item fade-up">
-                            <div class="message-inner">
-                                <div class="message-head clearfix">
-                                    <div class="user-detail">
-                                        <h5 class="handle">{{ log.pub_time|date:'Y/m/d' }}</h5>
 
+                            {% for log in logs %}
+                                <div class="message-item fade-up">
+                                    <div class="message-inner">
+                                        <div class="message-head clearfix">
+                                            <div class="user-detail">
+                                                <h5 class="handle">{{ log.pub_time|date:'Y/m/d' }}</h5>
+
+                                            </div>
+                                        </div>
+                                        <div class="qa-message-content">
+                                            {{ log.body }}
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="qa-message-content">
-                                    {{ log.body }}
+                            {% endfor %}
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End logs -->
+
+        <!-- Article -->
+        <div class="container post-list">
+            <div class="row">
+                <div class="centered gap fade-down section-heading">
+                    <h2 class="main-title">文 章</h2>
+                    <hr>
+                    <p>一些作品</p>
+                </div>
+                {% for article in articles %}
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12 post fade-up">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3>
+                                            <a href="{{ article.get_absolute_url }}"
+                                               class="post-title">{{ article.title }}</a>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="row post-content">
+                                    <div class="col-md-12">
+                                        <p>
+                                            {{ article.body|slice:':200'|striptags }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        {% endfor %}
-
-
                     </div>
-                </div>
+                {% endfor %}
             </div>
+            <div class="gap"></div>
         </div>
-    </section>
-    <!-- End logs -->
-
-    <!-- Article -->
-    <div class="container post-list">
-        <div class="row">
-            <div class="centered gap fade-down section-heading">
-                <h2 class="main-title">文 章</h2>
-                <hr>
-                <p>一些作品</p>
-            </div>
-            {% for article in articles %}
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-12 post fade-up">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <h3>
-                                    <a href="{{ article.get_absolute_url }}" class="post-title">{{ article.title }}</a>
-                                </h3>
-                            </div>
-                        </div>
-                        <div class="row post-content">
-                            <div class="col-md-12">
-                                <p>
-                                    {{ article.body|slice:':200'|striptags }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-        <div class="gap"></div>
-    </div>
-    <!-- End article -->
+        <!-- End article -->
 
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+        <div class="container" style="margin-bottom: 50px">
+            <div class="row">
+
+<<<<<<< HEAD
     <div class="container">
         <div class="row">
+=======
+                <div class="centered gap fade-down section-heading">
+                    <h2 class="main-title">分 类</h2>
+                    <hr>
+                    <p>一些作品</p>
+                </div>
+                <div class="gap fade-down">
+                    {% for category in categories %}
+                        <div class="col-md-{{ category.size }} col-xs-12 gap">
+                            <div class="hovereffect">
+                                <img class="img-responsive" src="{{ category.img }}">
+                                <div class="overlay">
+                                    <h2>{{ category.name }}</h2>
+                                    <a class="info" href="{% url 'blog:category' category.slug %}">浏 览 文 章</a>
+                                </div>
+                            </div>
+=======
+    <div class="container" style="margin-bottom: 50px">
+        <div class="row" style="margin-bottom: 50px">
+>>>>>>> 886d1ad9e9f2c47c82055e897b3c2e9ad657a479
+=======
+    <div class="container">
+        <div class="row">
+>>>>>>> parent of 87be71e (feat: 底部备案)
             
             <div class="centered gap fade-down section-heading">
                 <h2 class="main-title">分 类</h2>
@@ -123,13 +152,12 @@
                         <div class="overlay">
                            <h2>{{ category.name }}</h2>
                            <a class="info" href="{% url 'blog:category' category.slug %}">浏 览 文 章</a>
+>>>>>>> 87be71e6cc15fd9ea389ca198f5c336be95791cd
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
             </div>
         </div>
-    </div>
 
 
 
@@ -137,143 +165,155 @@
 
 
 
-    {% comment %} <section id="portfolio" class="white">
-        <div class="container">
-            <div class="gap"></div>
-            <div class="centered gap fade-down section-heading">
-                <h2 class="main-title">陈列柜</h2>
-                <hr>
-                <p>一些作品</p>
-            </div>
-            <ul class="portfolio-filter fade-down centered">
-                <li><a class="btn btn-outlined btn-primary active" href="#" data-filter="*">All</a></li>
-                <li><a class="btn btn-outlined btn-primary" href="#" data-filter=".apps">Apps</a></li>
-                <li><a class="btn btn-outlined btn-primary" href="#" data-filter=".nature">Nature</a></li>
-                <li><a class="btn btn-outlined btn-primary" href="#" data-filter=".design">Design</a></li>
-            </ul>
-            <!--/#portfolio-filter-->
-
-            <ul class="portfolio-items col-3 isotope fade-up gap">
-                <li class="portfolio-item apps isotope-item">
-                    <div class="item-inner">
-                        <img src="assets/img/demo/1.jpg" alt="">
-                        <div class="overlay">
-                            <a class="preview btn btn-outlined btn-primary" href="assets/img/demo/1.jpg"
-                                data-rel="prettyPhoto"><i class="fa fa-eye"></i></a>
-                            <a class="preview btn btn-outlined btn-primary" href="single-project.html"><i
-                                    class="fa fa-link"></i></a>
-                        </div>
+        {% comment %}
+            <section id="portfolio" class="white">
+                <div class="container">
+                    <div class="gap"></div>
+                    <div class="centered gap fade-down section-heading">
+                        <h2 class="main-title">陈列柜</h2>
+                        <hr>
+                        <p>一些作品</p>
                     </div>
-                </li>
-                <!--/.portfolio-item-->
-                <li class="portfolio-item joomla nature isotope-item">
-                    <div class="item-inner">
-                        <img src="assets/img/demo/2.jpg" alt="">
-                        <div class="overlay">
-                            <a class="preview btn btn-outlined btn-primary" href="assets/img/demo/2.jpg"
-                                data-rel="prettyPhoto"><i class="fa fa-eye"></i></a>
-                            <a class="preview btn btn-outlined btn-primary" href="single-project.html"><i
-                                    class="fa fa-link"></i></a> a>
-                        </div>
-                    </div>
-                </li>
-                <!--/.portfolio-item-->
-                <li class="portfolio-item bootstrap design isotope-item">
-                    <div class="item-inner">
-                        <img src="assets/img/demo/3.jpg" alt="">
-                        <div class="overlay">
-                            <a class="preview btn btn-outlined btn-primary" href="assets/img/demo/3.jpg"
-                                data-rel="prettyPhoto"><i class="fa fa-eye"></i></a>
-                            <a class="preview btn btn-outlined btn-primary" href="single-project.html"><i
-                                    class="fa fa-link"></i></a> >
-                        </div>
-                    </div>
-                </li>
-                <!--/.portfolio-item-->
-                <li class="portfolio-item joomla design apps isotope-item">
-                    <div class="item-inner">
-                        <img src="assets/img/demo/5.jpg" alt="">
-                        <div class="overlay">
-                            <a class="preview btn btn-outlined btn-primary" href="assets/img/demo/5.jpg"
-                                data-rel="prettyPhoto"><i class="fa fa-eye"></i></a>
-                            <a class="preview btn btn-outlined btn-primary" href="single-project.html"><i
-                                    class="fa fa-link"></i></a>
-                        </div>
-                    </div>
-                </li>
-                <!--/.portfolio-item-->
-                <li class="portfolio-item joomla apps isotope-item">
-                    <div class="item-inner">
-                        <img src="assets/img/demo/6.jpg" alt="">
-                        <div class="overlay">
-                            <a class="preview btn btn-outlined btn-primary" href="assets/img/demo/6.jpg"
-                                data-rel="prettyPhoto"><i class="fa fa-eye"></i></a>
-                            <a class="preview btn btn-outlined btn-primary" href="single-project.html"><i
-                                    class="fa fa-link"></i></a>
-                        </div>
-                    </div>
-                </li>
-                <!--/.portfolio-item-->
-            </ul>
-        </div>
-    </section> {% endcomment %}
+                    <ul class="portfolio-filter fade-down centered">
+                        <li><a class="btn btn-outlined btn-primary active" href="#" data-filter="*">All</a></li>
+                        <li><a class="btn btn-outlined btn-primary" href="#" data-filter=".apps">Apps</a></li>
+                        <li><a class="btn btn-outlined btn-primary" href="#" data-filter=".nature">Nature</a></li>
+                        <li><a class="btn btn-outlined btn-primary" href="#" data-filter=".design">Design</a></li>
+                    </ul>
+                    <!--/#portfolio-filter-->
 
-
-
-
-    {% comment %} 
-
-    <section id="stats" class="divider-wrapper">
-        <div class="container">
-
-            <div class="row">
-                <div class="centered gap fade-down section-heading">
-                    <h2 class="main-title">统计数据</h2>
-                    <hr>
-                    <p>之后会完善</p>
+                    <ul class="portfolio-items col-3 isotope fade-up gap">
+                        <li class="portfolio-item apps isotope-item">
+                            <div class="item-inner">
+                                <img src="assets/img/demo/1.jpg" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-outlined btn-primary" href="assets/img/demo/1.jpg"
+                                       data-rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                    <a class="preview btn btn-outlined btn-primary" href="single-project.html"><i
+                                            class="fa fa-link"></i></a>
+                                </div>
+                            </div>
+                        </li>
+                        <!--/.portfolio-item-->
+                        <li class="portfolio-item joomla nature isotope-item">
+                            <div class="item-inner">
+                                <img src="assets/img/demo/2.jpg" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-outlined btn-primary" href="assets/img/demo/2.jpg"
+                                       data-rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                    <a class="preview btn btn-outlined btn-primary" href="single-project.html"><i
+                                            class="fa fa-link"></i></a> a>
+                                </div>
+                            </div>
+                        </li>
+                        <!--/.portfolio-item-->
+                        <li class="portfolio-item bootstrap design isotope-item">
+                            <div class="item-inner">
+                                <img src="assets/img/demo/3.jpg" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-outlined btn-primary" href="assets/img/demo/3.jpg"
+                                       data-rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                    <a class="preview btn btn-outlined btn-primary" href="single-project.html"><i
+                                            class="fa fa-link"></i></a> >
+                                </div>
+                            </div>
+                        </li>
+                        <!--/.portfolio-item-->
+                        <li class="portfolio-item joomla design apps isotope-item">
+                            <div class="item-inner">
+                                <img src="assets/img/demo/5.jpg" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-outlined btn-primary" href="assets/img/demo/5.jpg"
+                                       data-rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                    <a class="preview btn btn-outlined btn-primary" href="single-project.html"><i
+                                            class="fa fa-link"></i></a>
+                                </div>
+                            </div>
+                        </li>
+                        <!--/.portfolio-item-->
+                        <li class="portfolio-item joomla apps isotope-item">
+                            <div class="item-inner">
+                                <img src="assets/img/demo/6.jpg" alt="">
+                                <div class="overlay">
+                                    <a class="preview btn btn-outlined btn-primary" href="assets/img/demo/6.jpg"
+                                       data-rel="prettyPhoto"><i class="fa fa-eye"></i></a>
+                                    <a class="preview btn btn-outlined btn-primary" href="single-project.html"><i
+                                            class="fa fa-link"></i></a>
+                                </div>
+                            </div>
+                        </li>
+                        <!--/.portfolio-item-->
+                    </ul>
                 </div>
-            </div><!-- row -->
+            </section> {% endcomment %}
 
-            <div class="row gap">
-                <div class="col-md-3 col-xs-12">
-                    <div class="centered bounce-in">
+
+
+
+        {% comment %}
+
+            <section id="stats" class="divider-wrapper">
+                <div class="container">
+
+                    <div class="row">
+                        <div class="centered gap fade-down section-heading">
+                            <h2 class="main-title">统计数据</h2>
+                            <hr>
+                            <p>之后会完善</p>
+                        </div>
+                    </div><!-- row -->
+
+                    <div class="row gap">
+                        <div class="col-md-3 col-xs-12">
+                            <div class="centered bounce-in">
                         <span class="stat-icon"><span
                                 class="pe-7s-timer bounce-in no-display animated bounceIn appear"></span></span>
-                        <h5><span class="countup">99999999</span></h5>
-                        <h6>HOURS SAVED</h6>
-                    </div>
-                </div>
-                <div class="col-md-3 col-xs-12">
-                    <div class="centered bounce-in">
+                                <h5><span class="countup">99999999</span></h5>
+                                <h6>HOURS SAVED</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-12">
+                            <div class="centered bounce-in">
                         <span class="stat-icon"><span
                                 class="pe-7s-light bounce-in no-display animated bounceIn appear"></span></span>
-                        <h5><span class="countup">99999999</span></h5>
-                        <h6>HOURS SAVED</h6>
-                    </div>
-                </div>
-                <div class="col-md-3 col-xs-12">
-                    <div class="centered bounce-in">
+                                <h5><span class="countup">99999999</span></h5>
+                                <h6>HOURS SAVED</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-12">
+                            <div class="centered bounce-in">
                         <span class="stat-icon"><span
                                 class="pe-7s-graph1 bounce-in no-display animated bounceIn appear"></span></span>
-                        <h5><span class="countup">99999999</span></h5>
-                        <h6>HOURS SAVED</h6>
-                    </div>
-                </div>
-                <div class="col-md-3 col-xs-12">
-                    <div class="centered bounce-in">
+                                <h5><span class="countup">99999999</span></h5>
+                                <h6>HOURS SAVED</h6>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-12">
+                            <div class="centered bounce-in">
                         <span class="stat-icon"><span
                                 class="pe-7s-box2 bounce-in no-display animated bounceIn appear"></span></span>
-                        <h5><span class="countup">99999999</span></h5>
-                        <h6>HOURS SAVED</h6>
+                                <h5><span class="countup">99999999</span></h5>
+                                <h6>HOURS SAVED</h6>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
-            </div>
-
-        </div>
-    </section> {% endcomment %}
+            </section> {% endcomment %}
 
 
-
-
-</div>
+<<<<<<< HEAD
+    </div>
 {% endblock main %}
+=======
+</div>
+<<<<<<< HEAD
+<<<<<<< HEAD
+{% endblock main %}
+=======
+{% endblock main %}
+>>>>>>> 87be71e6cc15fd9ea389ca198f5c336be95791cd
+>>>>>>> 886d1ad9e9f2c47c82055e897b3c2e9ad657a479
+=======
+{% endblock main %}
+>>>>>>> parent of 87be71e (feat: 底部备案)
