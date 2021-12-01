@@ -8,6 +8,9 @@ class Log(models.Model):
     pub_time = models.DateTimeField(blank=False, null=False, default=now)
     body = models.TextField()
 
+    def __str__(self):
+        return self.pub_time.date().__str__()
+
     class Meta:
         ordering = ['-pub_time']
 
