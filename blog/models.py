@@ -5,19 +5,18 @@ import markdown
 
 
 class Log(models.Model):
-
     pub_time = models.DateTimeField(blank=False, null=False, default=now)
     body = models.TextField()
 
     class Meta:
         ordering = ['-pub_time']
 
+
 class Article(models.Model):
     ALLOW_COMMENT = (
         ('0', 'yes'),
         ('1', 'no')
     )
-
 
     title = models.CharField(max_length=100)
     body = models.TextField()
@@ -64,10 +63,10 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-    
-    
+
     def get_absolute_url(self):
-        return reverse('blog:category_detail', kwargs={'category_name':self.slug})
+        return reverse('blog:category_detail', kwargs={'category_name': self.slug})
+
 
 class Tag(models.Model):
     name = models.CharField("标签", max_length=20)
@@ -80,8 +79,8 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
-class Nav(models.Model):
 
+class Nav(models.Model):
     name = models.CharField(max_length=50)
     content = models.TextField(blank=True)
     style = models.TextField(blank=True)
@@ -102,12 +101,9 @@ class Nav(models.Model):
         else:
             url = self.content
             return reverse(url)
-            
-    
 
 
 class NavCollapse(models.Model):
-
     name = models.CharField('标题', max_length=50)
     content = models.TextField()
     sequence = models.IntegerField('排序', unique=True)
@@ -124,7 +120,6 @@ class NavCollapse(models.Model):
 
 
 class Links(models.Model):
-
     name = models.CharField('链接名称', max_length=30, unique=True)
     link = models.URLField('链接地址')
     sequence = models.IntegerField('排序', unique=True)
@@ -143,7 +138,6 @@ class Links(models.Model):
 
 
 class BlogSettings(models.Model):
-
     sitename = models.CharField("网站名称", max_length=200, null=False, blank=False, default='')
     site_description = models.TextField("网站描述", max_length=1000, null=False, blank=False, default='')
     site_seo_description = models.TextField("网站SEO描述", max_length=1000, null=False, blank=False, default='')
@@ -173,4 +167,3 @@ class BlogSettings(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-
